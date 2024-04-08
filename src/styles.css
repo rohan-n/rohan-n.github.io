@@ -1,0 +1,47 @@
+body {
+  font-family: "Slabo 27px", sans-serif;
+  font-weight: normal;
+  color: #333333;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+    color: #333333;
+    background-color: transparent;
+    text-decoration: none;
+}
+
+a:hover {
+    color: LightSlateGray;
+}
+  
+
+.main-container {
+    width: 100%
+}
+
+.center {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+  
+.center-inline-text {
+    position: relative;
+    text-align: center;
+}
+  
+.name {
+    font-size: 36px;
+    font-weight: normal;
+    font-weight: 200;
+    letter-spacing: 0.1em;
+    line-height: 60px;
+}
+  
+.nav {
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    font-weight: 700;
+}
