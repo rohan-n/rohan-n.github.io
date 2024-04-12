@@ -30,6 +30,7 @@ a:hover {
 .center-inline-text {
     position: relative;
     text-align: center;
+    color: #ffffff;
 }
   
 .name {
