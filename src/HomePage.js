@@ -2,8 +2,8 @@ import React from 'react';
 
 const HomePage = () => {
   return (
-    <div class="main-container center">
-      <div class="name center-inline-text">
+    <div className="main-container center">
+      <div className="name center-inline-text">
         Rohan Nagalkar
       </div>
     </div>

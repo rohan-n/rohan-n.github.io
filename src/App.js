@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HomePage from './HomePage';
 import './styles.css';
-import Particles, { ISourceOptions } from "react-tsparticles";
 // import BookListPage from './BookListPage';
 
 const App = () => {
