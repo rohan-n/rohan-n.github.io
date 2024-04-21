@@ -4,7 +4,7 @@ Personal Website
 Feature List
 - [X] Landing Page with Name
 - [X] Cool Background
-- [ ] Github workflow
+- [X] Github workflow
 - [ ] Links to externals
 - [ ] About Me page
 - [ ] Booklist page

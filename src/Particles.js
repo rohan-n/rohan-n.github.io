@@ -6,11 +6,13 @@ const configs = {
         value: 100
       },
       color: {
-        value: "#ffffff"
+        value: "#e41212aa"
       },
       links: {
         enable: true,
-        distance: 250
+        distance: 250,
+        color: "random",
+        opacity: 0.5,
       },
       shape: {
         type: "circle"
