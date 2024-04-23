@@ -5,17 +5,6 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-a {
-    color: #333333;
-    background-color: transparent;
-    text-decoration: none;
-}
-
-a:hover {
-    color: LightSlateGray;
-}
-  
-
 .main-container {
     width: 100%
 }
@@ -30,7 +19,6 @@ a:hover {
 .center-inline-text {
     position: relative;
     text-align: center;
-    color: #ffffff;
 }
   
 .name {
@@ -39,10 +27,37 @@ a:hover {
     font-weight: 200;
     letter-spacing: 0.1em;
     line-height: 60px;
+    color: #ffffff;
 }
   
 .nav {
     font-size: 11px;
     letter-spacing: 0.3em;
     font-weight: 700;
+}
+
+a i{
+    color: white;
+    margin-right: 40px;
+}
+
+
+a:hover i{
+    transform: scale(0.90);
+}
+
+a:hover .fa-linkedin{
+    color: #0077B5;
+}
+
+a:hover .fa-x-twitter{
+    color: #9313d3;
+}
+
+a:hover .fa-envelope{
+    color: #2d981f;
+}
+
+a:hover .fa-github-square{
+    color: #e9ac3b;
 }
