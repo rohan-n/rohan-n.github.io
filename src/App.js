@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HomePage from './HomePage';
+import AboutMePage from './AboutMe';
 import './styles.css';
 // import BookListPage from './BookListPage';
 import { initParticlesEngine, Particles } from "@tsparticles/react";
@@ -32,6 +33,7 @@ const App = () => {
     <Router>
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/bio" element={<AboutMePage />} />
         {/* <Route path="/booklist" component={BookListPage} /> */}
       </Routes>
     </Router>

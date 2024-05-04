@@ -15,10 +15,11 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
 }
-  
+
 .center-inline-text {
     position: relative;
     text-align: center;
+    color: #ffffff;
 }
   
 .name {
@@ -27,7 +28,6 @@ body {
     font-weight: 200;
     letter-spacing: 0.1em;
     line-height: 60px;
-    color: #ffffff;
 }
   
 .nav {
