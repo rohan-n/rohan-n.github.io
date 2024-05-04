@@ -15,6 +15,7 @@ const HomePage = () => {
       </div>
       <div className="center-inline-text" style={{ marginTop: '50px' }}>
         <a href="/bio"><i className="fa fa-info-circle fa-3x fa-fw"></i></a> 
+        <a href="https://www.goodreads.com/user/show/177940541-rohan-n"><i className="fa fa-book fa-3x fa-fw"></i></a> 
       </div>
       </div>
   );
