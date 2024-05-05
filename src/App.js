@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { HashRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HomePage from './HomePage';
 import AboutMePage from './AboutMe';
 import './styles.css';
@@ -30,10 +30,10 @@ const App = () => {
     particlesLoaded={particlesLoaded}
     options={configs}
   />
-    <Router>
+    <Router basename=''>
       <Routes>
         <Route exact path="/" element={<HomePage />} />
-        <Route exact path="#/bio" element={<AboutMePage />} />
+        <Route path="bio" element={<AboutMePage />} />
       </Routes>
     </Router>
     </>
