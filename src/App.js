@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import HomePage from './HomePage';
 import AboutMePage from './AboutMe';
 import './styles.css';
@@ -32,8 +32,8 @@ const App = () => {
   />
     <Router>
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/bio" element={<AboutMePage />} />
+        <Route exact path="/" element={<HomePage />} />
+        <Route exact path="#/bio" element={<AboutMePage />} />
       </Routes>
     </Router>
     </>
