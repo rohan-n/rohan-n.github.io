@@ -11,4 +11,4 @@ Feature List
 - [X] Populate with content
 - [ ] Optimize mobile view
 - [ ] Dark switch toggle?
-- [ ] Cool Background that's animated ([example](https://codepen.io/matteobruni/pen/bGrXJew), I've spent too much time trying to figure this out)
+- [ ] Cool Background that's (more) animated ([example](https://codepen.io/matteobruni/pen/bGrXJew), I've spent too much time trying to figure this out)
