@@ -3,10 +3,10 @@ import Particles, { initParticlesEngine } from "@tsparticles/react";
 const configs = {
     particles: {
       number: {
-        value: 100
+        value: 400
       },
       color: {
-        value: "#e41212aa"
+        value: ["#ff0000aa", "#00ff00aa", "#0000ffaa", "#ffffffff"]
       },
       links: {
         enable: true,
@@ -36,6 +36,20 @@ const configs = {
     },
     poisson: {
       enable: true
+    },
+    interactivity: {
+      events: {
+        onHover: {
+          enable: true,
+          mode: "attract"
+        }
+      },
+      modes: {
+        attract: {
+          distance: 200,
+          duration: 0.01
+        }
+      }
     }
   };
 
