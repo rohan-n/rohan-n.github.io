@@ -1,0 +1,89 @@
+name: Update Goodreads Books
+
+on:
+  schedule:
+    - cron: '0 6 * * *'  # 6am UTC daily
+  workflow_dispatch:       # manual trigger from GitHub Actions UI
+
+jobs:
+  update-books:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Fetch Goodreads RSS and write books.json
+        run: |
+          node - <<'EOF'
+          const https = require('https');
+          const fs = require('fs');
+
+          const URL = 'https://www.goodreads.com/review/list_rss/177940541?shelf=read&sort=date_added&order=d&per_page=5';
+
+          https.get(URL, { headers: { 'User-Agent': 'Mozilla/5.0' } }, (res) => {
+            let xml = '';
+            res.on('data', chunk => xml += chunk);
+            res.on('end', () => {
+              const items = [];
+              const itemBlocks = xml.match(/<item>([\s\S]*?)<\/item>/g) || [];
+              for (const block of itemBlocks.slice(0, 5)) {
+                const get = (tag) => {
+                  const m = block.match(new RegExp(
+                    `<${tag}[^>]*><!\\[CDATA\\[([\\s\\S]*?)\\]\\]><\\/${tag}>|<${tag}[^>]*>([\\s\\S]*?)<\\/${tag}>`
+                  ));
+                  return m ? (m[1] || m[2] || '').trim() : '';
+                };
+                items.push({
+                  title: get('title'),
+                  author: get('author_name'),
+                  coverUrl: get('book_large_image_url') || get('book_medium_image_url'),
+                });
+              }
+              if (items.length === 0) {
+                console.error('No items parsed from RSS feed — aborting');
+                process.exit(1);
+              }
+              fs.writeFileSync('public/books.json', JSON.stringify(items, null, 2));
+              console.log(`Wrote ${items.length} books to public/books.json`);
+              items.forEach(b => console.log(` - ${b.title} | ${b.author} | ${b.coverUrl}`));
+            });
+          }).on('error', (e) => {
+            console.error('Fetch error:', e.message);
+            process.exit(1);
+          });
+          EOF
+
+      - name: Commit books.json if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add public/books.json
+          if git diff --staged --quiet; then
+            echo "No changes to books.json — skipping commit and deploy"
+            echo "CHANGED=false" >> $GITHUB_ENV
+          else
+            git commit -m "chore: update books.json from Goodreads RSS [skip ci]"
+            git push origin main
+            echo "CHANGED=true" >> $GITHUB_ENV
+          fi
+
+      - name: Install dependencies
+        if: env.CHANGED == 'true'
+        run: npm ci
+
+      - name: Deploy to GitHub Pages
+        if: env.CHANGED == 'true'
+        run: npm run deploy
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
