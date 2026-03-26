@@ -46,7 +46,7 @@ const LandingPage = () => {
               <p className="hero-body">
                 Most recently, I've worked at
                 <a href="https://robinhood.com" target="_blank" rel="noopener noreferrer"> Robinhood</a>,
-                <a href="https://x1card.com" target="_blank" rel="noopener noreferrer"> X1</a>, and
+                <a href="https://techcrunch.com/2023/06/22/robinhood-acquires-credit-card-startup-x1-for-95m/" target="_blank" rel="noopener noreferrer"> X1</a>, and
                 <a href="https://www.affirm.com" target="_blank" rel="noopener noreferrer"> Affirm</a>, where I built financial products that are simpler, delightful, and fair.
               </p>
               <p className="hero-body">
