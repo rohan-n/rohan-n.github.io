@@ -1,7 +1,27 @@
 [
-  {"title": "The Alignment Problem", "author": "Brian Christian", "coverUrl": ""},
-  {"title": "Sapiens", "author": "Yuval Noah Harari", "coverUrl": ""},
-  {"title": "The Innovator's Dilemma", "author": "Clayton Christensen", "coverUrl": ""},
-  {"title": "Thinking, Fast and Slow", "author": "Daniel Kahneman", "coverUrl": ""},
-  {"title": "Zero to One", "author": "Peter Thiel", "coverUrl": ""}
+  {
+    "title": "Dune Messiah (Dune #2)",
+    "author": "Frank Herbert",
+    "coverUrl": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1577043824l/44492285._SY475_.jpg"
+  },
+  {
+    "title": "The Seven Husbands of Evelyn Hugo",
+    "author": "Taylor Jenkins Reid",
+    "coverUrl": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1664458703l/32620332._SY475_.jpg"
+  },
+  {
+    "title": "When Breath Becomes Air",
+    "author": "Paul Kalanithi",
+    "coverUrl": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1492677644l/25899336.jpg"
+  },
+  {
+    "title": "Everything Is Tuberculosis: The History and Persistence of Our Deadliest Infection",
+    "author": "John Green",
+    "coverUrl": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1729825992l/220341389._SY475_.jpg"
+  },
+  {
+    "title": "How To Build A Car",
+    "author": "Adrian Newey",
+    "coverUrl": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1509876857l/35657708._SX318_.jpg"
+  }
 ]
