@@ -1,5 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import SideParticles from './SideParticles';
+
+const BOOK_COLORS = ['#3d5a80', '#6b4c3b', '#4a5568', '#2d6a4f', '#7b2d8b'];
+
+const FALLBACK_BOOKS = [
+  { title: 'The Great Gatsby', author: 'F. Scott Fitzgerald', coverUrl: '', color: '#3d5a80' },
+  { title: 'Sapiens', author: 'Yuval Noah Harari', coverUrl: '', color: '#6b4c3b' },
+  { title: "Chip War", author: 'Chris Miller', coverUrl: '', color: '#4a5568' },
+  { title: 'Thinking, Fast and Slow', author: 'Daniel Kahneman', coverUrl: '', color: '#2d6a4f' },
+  { title: 'Zero to One', author: 'Peter Thiel', coverUrl: '', color: '#7b2d8b' },
+];
 
 const LandingPage = () => {
   const [showContent, setShowContent] = useState(false);
@@ -7,10 +17,46 @@ const LandingPage = () => {
     const saved = localStorage.getItem('darkMode');
     return saved !== null ? JSON.parse(saved) : true;
   });
+  const [books, setBooks] = useState(FALLBACK_BOOKS);
+  const [booksLoading, setBooksLoading] = useState(true);
+  const [bookIndex, setBookIndex] = useState(0);
+  const intervalRef = useRef(null);
+
+  const startCarousel = () => {
+    intervalRef.current = setInterval(() => {
+      setBookIndex(i => (i + 1) % 5);
+    }, 3500);
+  };
+
+  const goTo = (idx) => {
+    clearInterval(intervalRef.current);
+    setBookIndex(idx);
+    startCarousel();
+  };
 
   useEffect(() => {
     setShowContent(true);
   }, []);
+
+  useEffect(() => {
+    fetch('/books.json')
+      .then(res => {
+        if (!res.ok) throw new Error('not found');
+        return res.json();
+      })
+      .then(data => {
+        if (Array.isArray(data) && data.length > 0) {
+          setBooks(data.map((b, i) => ({ ...b, color: BOOK_COLORS[i % BOOK_COLORS.length] })));
+        }
+      })
+      .catch(() => {}) // eslint-disable-line
+      .finally(() => setBooksLoading(false));
+  }, []);
+
+  useEffect(() => {
+    startCarousel();
+    return () => clearInterval(intervalRef.current);
+  }, []); // eslint-disable-line
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
@@ -61,6 +107,67 @@ const LandingPage = () => {
 
         <hr className="rule" />
 
+        {/* Bookshelf Section */}
+        <div className="bookshelf-section">
+          <p className="links-label">Bookshelf</p>
+          <div className="bookshelf-carousel">
+            <button className="carousel-arrow left" onClick={() => goTo((bookIndex - 1 + books.length) % books.length)} aria-label="Previous book">&#8592;</button>
+            <div className="carousel-track">
+              {books.map((book, i) => (
+                <div
+                  key={book.title}
+                  className={`book-card${i === bookIndex ? ' active' : ''}${i === (bookIndex - 1 + books.length) % books.length ? ' prev' : ''}${i === (bookIndex + 1) % books.length ? ' next' : ''}${booksLoading ? ' loading' : ''}`}
+                  style={{ '--book-color': book.color }}
+                  aria-hidden={i !== bookIndex}
+                >
+                  <div className="book-spine" />
+                  {book.coverUrl ? (
+                    <div className="book-cover book-cover--image">
+                      <img
+                        src={book.coverUrl}
+                        alt={`${book.title} cover`}
+                        className="book-cover-img"
+                        onError={e => {
+                          e.currentTarget.style.display = 'none';
+                          e.currentTarget.nextSibling.style.display = 'flex';
+                        }}
+                      />
+                      <div className="book-cover book-cover--fallback" style={{ display: 'none' }}>
+                        <span className="book-title">{book.title}</span>
+                        <span className="book-author">{book.author}</span>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="book-cover">
+                      <span className="book-title">{book.title}</span>
+                      <span className="book-author">{book.author}</span>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+            <button className="carousel-arrow right" onClick={() => goTo((bookIndex + 1) % books.length)} aria-label="Next book">&#8594;</button>
+          </div>
+          <div className="carousel-dots">
+            {books.map((_, i) => (
+              <button
+                key={i}
+                className={`dot${i === bookIndex ? ' active' : ''}`}
+                onClick={() => goTo(i)}
+                aria-label={`Go to book ${i + 1}`}
+              />
+            ))}
+          </div>
+          <div className="bookshelf-footer">
+            <a className="link-pill" href="https://www.goodreads.com/user/show/177940541-rohan-n" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" /><path d="M6.5 2H20v10H6.5A2.5 2.5 0 0 1 4 9.5v-5A2.5 2.5 0 0 1 6.5 2z" /></svg>
+              Goodreads
+            </a>
+          </div>
+        </div>
+
+        <hr className="rule bookshelf-rule" />
+
         {/* Links Section */}
         <div className="links-section">
           <p className="links-label">Find me</p>
@@ -80,10 +187,6 @@ const LandingPage = () => {
             <a className="link-pill" href="mailto:rohan.nagalkar13@gmail.com">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><rect x="2" y="4" width="20" height="16" rx="2" /><path d="m2 7 10 7 10-7" /></svg>
               Email
-            </a>
-            <a className="link-pill" href="https://www.goodreads.com/user/show/177940541-rohan-n" target="_blank" rel="noopener noreferrer">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" /><path d="M6.5 2H20v10H6.5A2.5 2.5 0 0 1 4 9.5v-5A2.5 2.5 0 0 1 6.5 2z" /></svg>
-              Goodreads
             </a>
           </div>
         </div>
