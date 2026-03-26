@@ -1,45 +1,56 @@
 import React, { useEffect, useState } from 'react';
+import SideParticles from './SideParticles';
 
 const LandingPage = () => {
   const [showContent, setShowContent] = useState(false);
+  const [isDark, setIsDark] = useState(() => {
+    const saved = localStorage.getItem('darkMode');
+    return saved !== null ? JSON.parse(saved) : true;
+  });
 
   useEffect(() => {
     setShowContent(true);
   }, []);
 
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+    localStorage.setItem('darkMode', JSON.stringify(isDark));
+  }, [isDark]);
+
   return (
     <div className="landing-wrapper">
-      {/* Hero Section with Welcome Animation */}
-      <section className="hero-section">
-        <div className="hero-content">
-          <h1 className={`welcome-text ${showContent ? 'animate-in' : ''}`}>
-            Welcome to<br />Rohan's Website
-          </h1>
-          <p className={`scroll-hint ${showContent ? 'animate-in' : ''}`}>Scroll to explore</p>
-        </div>
-      </section>
+      <SideParticles />
+      <button
+        className="theme-toggle"
+        onClick={() => setIsDark(!isDark)}
+        aria-label="Toggle dark mode"
+      >
+        {isDark ? (
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        ) : (
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        )}
+      </button>
 
       {/* Main Content Section */}
       <section className="main-content">
-        <nav className="nav">
-          <a className="nav-name" href="#home">Rohan Nagalkar</a>
-          <ul className="nav-links">
-            <li><a href="#about">About</a></li>
-          </ul>
-        </nav>
+        <div className="page-title">Rohan Nagalkar</div>
 
         {/* Hero/Intro Section */}
         <section className="hero">
           <div className="hero-with-photo">
             <div className="hero-text">
-              <p className="hero-eyebrow">San Francisco, CA</p>
-              <h2>Fintech builder.<br /><em>Consumer finance,</em><br />done right.</h2>
               <p className="hero-body">
-                I work at the intersection of engineering and consumer finance — most recently at
-                <a href="https://www.affirm.com" target="_blank" rel="noopener noreferrer"> Affirm</a> and
-                <a href="https://x1card.com" target="_blank" rel="noopener noreferrer"> X1</a> (acquired by
-                <a href="https://robinhood.com" target="_blank" rel="noopener noreferrer"> Robinhood</a>).
-                I care about making financial products fairer and simpler for real people.
+                I work at the intersection of humans and machines, with a focus on using technology to make lives better.
+              </p>
+              <p className="hero-body">
+                Most recently, I've worked at
+                <a href="https://robinhood.com" target="_blank" rel="noopener noreferrer"> Robinhood</a>,
+                <a href="https://x1card.com" target="_blank" rel="noopener noreferrer"> X1</a>, and
+                <a href="https://www.affirm.com" target="_blank" rel="noopener noreferrer"> Affirm</a>, where I built financial products that are simpler, delightful, and fair.
+              </p>
+              <p className="hero-body">
+                I'm now excited to take on new challenges at the frontier of AI - helping accelerate how businesses operate and how people interact with technology.
               </p>
             </div>
             <div className="hero-photo">
@@ -74,39 +85,6 @@ const LandingPage = () => {
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" /><path d="M6.5 2H20v10H6.5A2.5 2.5 0 0 1 4 9.5v-5A2.5 2.5 0 0 1 6.5 2z" /></svg>
               Goodreads
             </a>
-          </div>
-        </div>
-
-        {/* Currently Section */}
-        <div className="currently" id="about">
-          <p className="currently-label">Currently</p>
-          <div className="currently-items">
-            <div className="currently-item">
-              <span className="c-tag">Building</span>
-              <span className="c-text">This website and exploring the intersection of frontend and AI.</span>
-            </div>
-            <div className="currently-item">
-              <span className="c-tag">Role</span>
-              <span className="c-text">Software engineer focused on backend infrastructure and fintech systems.</span>
-            </div>
-            <div className="currently-item">
-              <span className="c-tag">Background</span>
-              <span className="c-text">
-                Started my career at <a href="https://www.affirm.com" target="_blank" rel="noopener noreferrer">Affirm</a> on the Trust &amp; Safety team building fraud detection systems. Then joined the <a href="https://x1card.com" target="_blank" rel="noopener noreferrer">X1</a> credit card team to understand consumer lending (acquired by <a href="https://robinhood.com" target="_blank" rel="noopener noreferrer">Robinhood</a>).
-              </span>
-            </div>
-            <div className="currently-item">
-              <span className="c-tag">Community</span>
-              <span className="c-text">Volunteer mentor with <a href="https://moneythink.org/" target="_blank" rel="noopener noreferrer">Moneythink</a>, teaching financial literacy to high school students.</span>
-            </div>
-            <div className="currently-item">
-              <span className="c-tag">Hobbies</span>
-              <span className="c-text">Reading, learning new things, playing video games, watching movies, and eating good food with great friends.</span>
-            </div>
-            <div className="currently-item">
-              <span className="c-tag">Based in</span>
-              <span className="c-text">San Francisco, CA</span>
-            </div>
           </div>
         </div>
       </section>
