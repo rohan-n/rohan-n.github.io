@@ -1,42 +1,33 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import SideParticles from './SideParticles';
+import LichessWidget from './LichessWidget';
+import MediaCarousel from './MediaCarousel';
 
 const BOOK_COLORS = ['#3d5a80', '#6b4c3b', '#4a5568', '#2d6a4f', '#7b2d8b'];
 
 const FALLBACK_BOOKS = [
-  { title: 'The Great Gatsby', author: 'F. Scott Fitzgerald', coverUrl: '', color: '#3d5a80' },
-  { title: 'Sapiens', author: 'Yuval Noah Harari', coverUrl: '', color: '#6b4c3b' },
-  { title: "Chip War", author: 'Chris Miller', coverUrl: '', color: '#4a5568' },
-  { title: 'Thinking, Fast and Slow', author: 'Daniel Kahneman', coverUrl: '', color: '#2d6a4f' },
-  { title: 'Zero to One', author: 'Peter Thiel', coverUrl: '', color: '#7b2d8b' },
+  { title: 'The Great Gatsby', subtitle: 'F. Scott Fitzgerald', imageUrl: '', color: '#3d5a80' },
+  { title: 'Sapiens', subtitle: 'Yuval Noah Harari', imageUrl: '', color: '#6b4c3b' },
+  { title: "Chip War", subtitle: 'Chris Miller', imageUrl: '', color: '#4a5568' },
+  { title: 'Thinking, Fast and Slow', subtitle: 'Daniel Kahneman', imageUrl: '', color: '#2d6a4f' },
+  { title: 'Zero to One', subtitle: 'Peter Thiel', imageUrl: '', color: '#7b2d8b' },
+];
+
+const TV_STAND_ITEMS = [
+  { title: 'Severance', subtitle: 'Apple TV+', imageUrl: 'https://image.tmdb.org/t/p/w500/pPHpeI2X1qEd1CS1SeyrdhZ4qnT.jpg', color: '#1a1a2e' },
+  { title: 'God of War Ragnarök', subtitle: 'PS5', imageUrl: 'https://upload.wikimedia.org/wikipedia/en/e/ee/God_of_War_Ragnar%C3%B6k_cover.jpg', color: '#1b2a4a' },
+  { title: 'Interstellar', subtitle: '2014', imageUrl: 'https://image.tmdb.org/t/p/w500/yQvGrMoipbRoddT0ZR8tPoR7NfX.jpg', color: '#0d1b2a' },
+  { title: "Marvel's Spider-Man", subtitle: 'PS4', imageUrl: 'https://upload.wikimedia.org/wikipedia/en/e/e1/Spider-Man_PS4_cover.jpg', color: '#c62828' },
+  { title: 'Mission: Impossible', subtitle: '1996', imageUrl: 'https://media.themoviedb.org/t/p/w500/l5uxY5m5OInWpcExIpKG6AR3rgL.jpg', color: '#1a237e' },
 ];
 
 const LandingPage = () => {
-  const [showContent, setShowContent] = useState(false);
   const [isDark, setIsDark] = useState(() => {
     const saved = localStorage.getItem('darkMode');
     return saved !== null ? JSON.parse(saved) : true;
   });
   const [books, setBooks] = useState(FALLBACK_BOOKS);
   const [booksLoading, setBooksLoading] = useState(true);
-  const [bookIndex, setBookIndex] = useState(0);
-  const intervalRef = useRef(null);
-
-  const startCarousel = () => {
-    intervalRef.current = setInterval(() => {
-      setBookIndex(i => (i + 1) % 5);
-    }, 3500);
-  };
-
-  const goTo = (idx) => {
-    clearInterval(intervalRef.current);
-    setBookIndex(idx);
-    startCarousel();
-  };
-
-  useEffect(() => {
-    setShowContent(true);
-  }, []);
 
   useEffect(() => {
     fetch('/books.json')
@@ -46,17 +37,17 @@ const LandingPage = () => {
       })
       .then(data => {
         if (Array.isArray(data) && data.length > 0) {
-          setBooks(data.map((b, i) => ({ ...b, color: BOOK_COLORS[i % BOOK_COLORS.length] })));
+          setBooks(data.map((b, i) => ({
+            title: b.title,
+            subtitle: b.author,
+            imageUrl: b.coverUrl,
+            color: BOOK_COLORS[i % BOOK_COLORS.length],
+          })));
         }
       })
       .catch(() => {}) // eslint-disable-line
       .finally(() => setBooksLoading(false));
   }, []);
-
-  useEffect(() => {
-    startCarousel();
-    return () => clearInterval(intervalRef.current);
-  }, []); // eslint-disable-line
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
@@ -110,54 +101,7 @@ const LandingPage = () => {
         {/* Bookshelf Section */}
         <div className="bookshelf-section">
           <p className="links-label">Bookshelf</p>
-          <div className="bookshelf-carousel">
-            <button className="carousel-arrow left" onClick={() => goTo((bookIndex - 1 + books.length) % books.length)} aria-label="Previous book">&#8592;</button>
-            <div className="carousel-track">
-              {books.map((book, i) => (
-                <div
-                  key={book.title}
-                  className={`book-card${i === bookIndex ? ' active' : ''}${i === (bookIndex - 1 + books.length) % books.length ? ' prev' : ''}${i === (bookIndex + 1) % books.length ? ' next' : ''}${booksLoading ? ' loading' : ''}`}
-                  style={{ '--book-color': book.color }}
-                  aria-hidden={i !== bookIndex}
-                >
-                  <div className="book-spine" />
-                  {book.coverUrl ? (
-                    <div className="book-cover book-cover--image">
-                      <img
-                        src={book.coverUrl}
-                        alt={`${book.title} cover`}
-                        className="book-cover-img"
-                        onError={e => {
-                          e.currentTarget.style.display = 'none';
-                          e.currentTarget.nextSibling.style.display = 'flex';
-                        }}
-                      />
-                      <div className="book-cover book-cover--fallback" style={{ display: 'none' }}>
-                        <span className="book-title">{book.title}</span>
-                        <span className="book-author">{book.author}</span>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="book-cover">
-                      <span className="book-title">{book.title}</span>
-                      <span className="book-author">{book.author}</span>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-            <button className="carousel-arrow right" onClick={() => goTo((bookIndex + 1) % books.length)} aria-label="Next book">&#8594;</button>
-          </div>
-          <div className="carousel-dots">
-            {books.map((_, i) => (
-              <button
-                key={i}
-                className={`dot${i === bookIndex ? ' active' : ''}`}
-                onClick={() => goTo(i)}
-                aria-label={`Go to book ${i + 1}`}
-              />
-            ))}
-          </div>
+          <MediaCarousel items={books} loading={booksLoading} />
           <div className="bookshelf-footer">
             <a className="link-pill" href="https://www.goodreads.com/user/show/177940541-rohan-n" target="_blank" rel="noopener noreferrer">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" /><path d="M6.5 2H20v10H6.5A2.5 2.5 0 0 1 4 9.5v-5A2.5 2.5 0 0 1 6.5 2z" /></svg>
@@ -166,7 +110,23 @@ const LandingPage = () => {
           </div>
         </div>
 
-        <hr className="rule bookshelf-rule" />
+        <hr className="rule" />
+
+        {/* TV Stand Section */}
+        <div className="bookshelf-section">
+          <p className="links-label">TV Stand</p>
+          <MediaCarousel items={TV_STAND_ITEMS} />
+        </div>
+
+        <hr className="rule" />
+
+        {/* Antichess Section */}
+        <div className="links-section">
+          <p className="links-label">Antichess</p>
+          <LichessWidget />
+        </div>
+
+        <hr className="rule" />
 
         {/* Links Section */}
         <div className="links-section">

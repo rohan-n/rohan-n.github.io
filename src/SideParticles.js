@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, memo } from 'react';
 import { initParticlesEngine, Particles } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim";
 
@@ -22,7 +22,7 @@ const makeConfig = (isDark) => {
   };
 };
 
-const SideParticles = () => {
+const SideParticles = memo(() => {
   const [init, setInit] = useState(false);
   const [isDark, setIsDark] = useState(
     () => document.documentElement.getAttribute('data-theme') !== 'light'
@@ -56,6 +56,6 @@ const SideParticles = () => {
       </div>
     </>
   );
-};
+});
 
 export default SideParticles;

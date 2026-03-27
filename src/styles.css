@@ -341,7 +341,7 @@ nav {
   align-items: center;
   gap: 1rem;
   position: relative;
-  height: 180px;
+  height: 230px;
 }
 
 .carousel-track {
@@ -353,32 +353,50 @@ nav {
 
 .book-card {
   position: absolute;
-  inset: 0;
+  width: 155px;
+  height: 100%;
+  left: 50%;
+  margin-left: -77px;
   display: flex;
   border-radius: 6px;
   overflow: hidden;
   opacity: 0;
-  transform: translateX(60px) scale(0.96);
-  transition: opacity 0.45s ease, transform 0.45s ease;
+  transform: translateX(290px) scale(0.78);
+  transition: opacity 0.45s ease, transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
   pointer-events: none;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.18);
+  cursor: default;
+}
+
+.book-card.far-prev {
+  opacity: 0;
+  transform: translateX(-290px) scale(0.78);
 }
 
 .book-card.prev {
-  opacity: 0;
-  transform: translateX(-60px) scale(0.96);
+  opacity: 0.45;
+  transform: translateX(-178px) scale(0.78);
+  pointer-events: auto;
+  cursor: pointer;
 }
 
 .book-card.active {
   opacity: 1;
   transform: translateX(0) scale(1);
   pointer-events: auto;
+  z-index: 1;
 }
 
-.book-spine {
-  width: 18px;
-  flex-shrink: 0;
-  background: color-mix(in srgb, var(--book-color) 70%, #000 30%);
+.book-card.next {
+  opacity: 0.45;
+  transform: translateX(178px) scale(0.78);
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.book-card.far-next {
+  opacity: 0;
+  transform: translateX(290px) scale(0.78);
 }
 
 .book-cover {
@@ -463,6 +481,7 @@ nav {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center top;
   display: block;
 }
 
@@ -504,6 +523,65 @@ nav {
 .goodreads-link:hover {
   color: var(--accent);
 }
+
+/* ── Lichess Widget ── */
+.lichess-msg {
+  font-size: 0.88rem;
+  color: var(--muted);
+}
+
+.lichess-error {
+  color: #dc2626;
+}
+
+.lichess-stats-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  margin-bottom: 1rem;
+}
+
+.lichess-stat {
+  display: flex;
+  flex-direction: column;
+  padding: 0.85rem 0;
+  padding-right: 1.75rem;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.lichess-stat-value {
+  font-size: 1.15rem;
+  font-weight: 500;
+  font-family: monospace;
+  color: var(--text);
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.lichess-stat-label {
+  font-size: 0.72rem;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-top: 3px;
+}
+
+.lichess-prog {
+  font-size: 0.72rem;
+  font-family: monospace;
+  margin-left: 5px;
+}
+
+.lichess-prog.up { color: #22c55e; }
+.lichess-prog.down { color: #ef4444; }
+
+.lichess-profile-link-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 0.25rem;
+}
+
 
 /* ── Footer ── */
 footer {
