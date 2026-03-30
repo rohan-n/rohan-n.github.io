@@ -230,6 +230,7 @@ nav {
   display: flex;
   flex-wrap: wrap;
   gap: 0.6rem;
+  justify-content: center;
 }
 
 .link-pill {
@@ -469,6 +470,34 @@ nav {
 .dot.active {
   background: var(--accent);
   transform: scale(1.2);
+}
+
+/* ── Micro-Takes ── */
+.micro-takes-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.micro-take-card {
+  width: 80%;
+  padding: 1.1rem 1.4rem;
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 0.88rem;
+  line-height: 1.65;
+  font-style: italic;
+  margin-left: 0;
+  margin-top: -0.75rem;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.22);
+  position: relative;
+}
+
+.micro-take-card:first-child {
+  margin-top: 0;
+}
+
+.micro-take-card--right {
+  margin-left: auto;
 }
 
 /* ── Book cover image mode ── */

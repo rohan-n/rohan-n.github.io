@@ -13,6 +13,14 @@ const FALLBACK_BOOKS = [
   { title: 'Zero to One', subtitle: 'Peter Thiel', imageUrl: '', color: '#7b2d8b' },
 ];
 
+const MICRO_TAKES = [
+  { text: 'People should be trusted to make their own financial decisions, and should be provided all the information they need to do so.', color: '#5c4a3d' },
+  { text: '"Do not pray for an easy life, pray for the strength to endure a difficult one."', color: '#2d4a3e' },
+  { text: 'The majority of the world is marked up 2-3% due to credit card interchange; a strong cashback card balances the scales for the consumer.', color: '#3d4a5c' },
+  { text: 'No one looks back on their life and remembers they had plenty of sleep.', color: '#4a3d5c' },
+  { text: '"I fear not the man who has practiced 10,000 kicks once, but I fear the man who has practiced one kick 10,000 times."', color: '#5c3d3d' },
+];
+
 const TV_STAND_ITEMS = [
   { title: 'Severance', subtitle: 'Apple TV+', imageUrl: 'https://image.tmdb.org/t/p/w500/pPHpeI2X1qEd1CS1SeyrdhZ4qnT.jpg', color: '#1a1a2e' },
   { title: 'God of War Ragnarök', subtitle: 'PS5', imageUrl: 'https://upload.wikimedia.org/wikipedia/en/e/ee/God_of_War_Ragnar%C3%B6k_cover.jpg', color: '#1b2a4a' },
@@ -107,6 +115,24 @@ const LandingPage = () => {
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" /><path d="M6.5 2H20v10H6.5A2.5 2.5 0 0 1 4 9.5v-5A2.5 2.5 0 0 1 6.5 2z" /></svg>
               Goodreads
             </a>
+          </div>
+        </div>
+
+        <hr className="rule" />
+
+        {/* Micro-Takes Section */}
+        <div className="bookshelf-section">
+          <p className="links-label">Micro-Takes / Select Quotes</p>
+          <div className="micro-takes-list">
+            {MICRO_TAKES.map((item, i) => (
+              <div
+                key={i}
+                className={`micro-take-card${i % 2 === 1 ? ' micro-take-card--right' : ''}`}
+                style={{ background: item.color }}
+              >
+                {item.text}
+              </div>
+            ))}
           </div>
         </div>
 
