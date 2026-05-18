@@ -1,5 +1,15 @@
 [
   {
+    "title": "Exhalation",
+    "author": "Ted Chiang",
+    "coverUrl": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1534388394l/41160292._SX318_.jpg"
+  },
+  {
+    "title": "Wool Omnibus (Silo, #1)",
+    "author": "Hugh Howey",
+    "coverUrl": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1349614200l/13453029.jpg"
+  },
+  {
     "title": "Nuclear War: A Scenario",
     "author": "Annie Jacobsen",
     "coverUrl": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1698060837l/182733784._SY475_.jpg"
@@ -13,15 +23,5 @@
     "title": "Dune Messiah (Dune #2)",
     "author": "Frank Herbert",
     "coverUrl": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1577043824l/44492285._SY475_.jpg"
-  },
-  {
-    "title": "When Breath Becomes Air",
-    "author": "Paul Kalanithi",
-    "coverUrl": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1492677644l/25899336.jpg"
-  },
-  {
-    "title": "Everything Is Tuberculosis: The History and Persistence of Our Deadliest Infection",
-    "author": "John  Green",
-    "coverUrl": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1729825992l/220341389._SY475_.jpg"
   }
 ]
